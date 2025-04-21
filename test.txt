@@ -1,2 +1,0 @@
-Hello semgrep!
-Retest at 12:06
