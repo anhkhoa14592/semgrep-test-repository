@@ -1,3 +1,4 @@
+// test filed-changed only scan
 package main
 
 import (
