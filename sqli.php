@@ -18,7 +18,7 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 
 				// Feedback for end user
 				$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
-			}
+			} 
 
 			mysqli_close($GLOBALS["___mysqli_ston"]);
 			break;
