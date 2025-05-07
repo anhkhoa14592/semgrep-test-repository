@@ -1,3 +1,4 @@
+// Test new image
 package example;
 
 import javax.xml.parsers.DocumentBuilderFactory;
