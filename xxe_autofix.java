@@ -1,4 +1,4 @@
-// Test new image
+// Test flag --include semgrep
 package example;
 
 import javax.xml.parsers.DocumentBuilderFactory;
