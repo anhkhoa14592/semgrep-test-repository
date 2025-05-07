@@ -1,4 +1,4 @@
-import jwt
+import jwt 
 
 secret_const = "this-is-secret"
 
