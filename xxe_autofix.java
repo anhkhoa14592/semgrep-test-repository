@@ -1,4 +1,4 @@
-// Test flag --include semgrep V2
+// Test flag --include semgrep V3
 package example;
 
 import javax.xml.parsers.DocumentBuilderFactory;
