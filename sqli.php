@@ -1,5 +1,5 @@
 <?php 
-// test filed-changed only scan 17:47
+// test update semgrep version
 if( isset( $_REQUEST[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_REQUEST[ 'id' ];
