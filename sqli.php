@@ -1,5 +1,5 @@
 <?php 
-// test update semgrep version
+// test update semgrep version - test
 if( isset( $_REQUEST[ 'Submit' ] ) ) {
 	// Get input
 	$id = $_REQUEST[ 'id' ];
