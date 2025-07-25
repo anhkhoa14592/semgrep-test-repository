@@ -1,5 +1,6 @@
 // test filed-changed only scan 17:47 last dance 11:11
 // test update semgrep version
+// test time: 1
 package main 
  
 import (
