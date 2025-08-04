@@ -1,4 +1,4 @@
-<!-- test total scanned targets and findings  -->
+<!-- test total scanned targets and findings -->
 
 <?php 
 // test update semgrep version - test 13h43
