@@ -1,4 +1,4 @@
-// test filed-changed only scan 17:47 last dance 11:11
+// # test total scanned targets and findings
 // test update semgrep version
 // test time: 1
 package main 
