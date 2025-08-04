@@ -1,4 +1,4 @@
-// # test total scanned targets and findings
+// # test total scanned targets and findings 
 // test update semgrep version
 // test time: 1
 package main 
