@@ -1,4 +1,4 @@
-// Test flag --include semgrep V6 - V7 - fix argocd 
+// Test flag --include semgrep V6 - V7 - fix argocd
 package example; 
 
 import javax.xml.parsers.DocumentBuilderFactory;
