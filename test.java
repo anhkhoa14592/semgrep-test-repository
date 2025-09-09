@@ -42,31 +42,7 @@ public class CompetitorCrawlingReportResultController {
     private final ThemisPermission VIEW_PERMISSION = new ThemisPermission("RetailVerification:View", "trn:tiki:RetailVerification:report");
     private final ThemisPermission UPDATE_PERMISSION = new ThemisPermission("RetailVerification:Update", "trn:tiki:RetailVerification:report");
 
-    @GetMapping("/by-report-date")
-    @Operation(
-            summary = "Get competitor crawling report by report date",
-            description = "Returns crawling results and overview statistics for the given report date"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Data fetched successfully",
-                    content = @Content(schema = @Schema(implementation = CompetitorCrawlingReportDto.class))),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "404", description = "Data not found")
-    })
-    public Mono<CompetitorCrawlingReportDto> findAllByReportDateRange(@RequestHeader(value = "Authorization") String userToken,
-                                                                      @Parameter(description = "Report date", required = true, example = "2024-08-06")
-                                                                      @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return this.themisService.checkPermission(userToken, VIEW_PERMISSION)
-                .then(Mono.zip(
-                        competitorMetricOverviewStatisticsService.findByReportDateAndReportType(date, OverviewReportType.DAILY),
-                        competitorCrawlingReportResultService.findAllByReportDate(date).collectList()
-                )).map(tuple2 -> {
-                    var overview = tuple2.getT1();
-                    var results = tuple2.getT2();
-
-                    return CompetitorCrawlingReportResultMapper.INSTANCE.toDto(results, overview);
-                });
-    }
+    
 
     @GetMapping("/overview/by-report-date")
     @Operation(
