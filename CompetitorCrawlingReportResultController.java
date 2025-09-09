@@ -89,27 +89,4 @@ public class CompetitorCrawlingReportResultController {
                 .map(reportUrl -> new ResponseDto<>(true, "", reportUrl));
     }
 
-    @Hidden
-    @PatchMapping("/{id}")
-    public Mono<ResponseDto<Boolean>> patch(
-            @RequestHeader(value = "Authorization") String userToken,
-            @PathVariable("id") long id,
-            @RequestBody CompetitorCrawlingReportResultUpdateDTO body
-    ) {
-        return this.themisService.checkPermission(userToken, UPDATE_PERMISSION)
-                .then(this.competitorCrawlingReportResultService.patch(id, body))
-                .map(updatedResult -> new ResponseDto<>(true));
-    }
-
-    @Hidden
-    @PatchMapping("/overview/{id}")
-    public Mono<ResponseDto<Boolean>> patchOverview(
-            @RequestHeader(value = "Authorization") String userToken,
-            @PathVariable("id") long id,
-            @RequestBody CompetitorMetricOverviewStatisticsUpdateDTO body) {
-        return this.themisService.checkPermission(userToken, UPDATE_PERMISSION)
-                .then(this.competitorCrawlingReportResultService.patchStatistics(id, body))
-                .map(updatedStatistics -> new ResponseDto<>(true));
-    }
-
 }
