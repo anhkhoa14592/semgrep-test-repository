@@ -14,6 +14,7 @@ func DeleteHandler(db *sql.DB) func(w http.ResponseWriter, req *http.Request) {
 		id := req.URL.Query().Get("Id")
 		if del == "del" {
 			// ruleid: tainted-sql-string
+			// test
 			_, err = db.Exec("DELETE FROM table WHERE Id = " + id) // test total scanned targets and findings
 			if err != nil {
 				panic(err)
