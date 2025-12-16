@@ -1,6 +1,7 @@
 // # test total scanned targets and findings
 // test update semgrep version
 // test time: 1
+// Test
 package main 
  
 import (
