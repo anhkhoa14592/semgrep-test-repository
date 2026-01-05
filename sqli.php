@@ -1,7 +1,7 @@
-<!-- test total scanned targets and findings --1>
+<!-- test total scanned targets and findings --2>
 
 <?php 
-// test update semgrep version - test 13h43
+// test update semgrep version - test 09h55
 if( isset( $_REQUEST[ 'Submit' ] ) ) { 
 	// Get input
 	$id = $_REQUEST[ 'id' ];
