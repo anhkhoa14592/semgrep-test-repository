@@ -30,11 +30,10 @@ if( isset( $_REQUEST[ 'Submit' ] ) ) {
 			#$sqlite_db_connection = new SQLite3($_DVWA['SQLITE_DB']);
 			#$sqlite_db_connection->enableExceptions(true);
 
-			#$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';"; // test total scanned targets and findings
+			$query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';"; // test total scanned targets and findings
 			#print $query;
-			$query_Test  = "SELECT first_name, last_name FROM users WHERE user_id = '$id';";
 			try {
-				$results = $sqlite_db_connection->query($query_Test);
+				$results = $sqlite_db_connection->query($query);
 			} catch (Exception $e) {
 				echo 'Caught exception: ' . $e->getMessage();
 				exit();
