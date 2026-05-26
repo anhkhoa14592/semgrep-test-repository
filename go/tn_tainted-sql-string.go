@@ -13,18 +13,35 @@ func safeButStillAlert(db *sql.DB) http.HandlerFunc {
 
 		/*
 			Manual escaping / allowlist
-			=> reviewer thấy đã mitigate SQLi
 		*/
-		if !isSafeUsername(username) {
+
+		// INLINE isSafeUsername logic
+		isSafe := true
+
+		if len(username) == 0 || len(username) > 32 {
+			isSafe = false
+		} else {
+			for _, c := range username {
+				// only a-z A-Z 0-9 _
+				if !((c >= 'a' && c <= 'z') ||
+					(c >= 'A' && c <= 'Z') ||
+					(c >= '0' && c <= '9') ||
+					c == '_') {
+					isSafe = false
+					break
+				}
+			}
+		}
+
+		if !isSafe {
 			http.Error(w, "invalid username", http.StatusBadRequest)
 			return
 		}
 
 		/*
-			Vẫn trigger rule vì:
-			- source: r.FormValue(...)
-			- sink: SQL string concat
-			- KHÔNG match sanitizer của rule
+			Still triggers rule:
+			- tainted input used in SQL concat
+			- no recognized sanitizer in Semgrep rule
 		*/
 		query := "SELECT * FROM users WHERE username = '" + username + "'"
 
@@ -37,26 +54,6 @@ func safeButStillAlert(db *sql.DB) http.HandlerFunc {
 
 		w.Write([]byte("ok"))
 	}
-}
-
-func isSafeUsername(s string) bool {
-	if len(s) == 0 || len(s) > 32 {
-		return false
-	}
-
-	for _, c := range s {
-
-		// strict allowlist:
-		// only a-z A-Z 0-9 _
-		if !((c >= 'a' && c <= 'z') ||
-			(c >= 'A' && c <= 'Z') ||
-			(c >= '0' && c <= '9') ||
-			c == '_') {
-			return false
-		}
-	}
-
-	return true
 }
 
 func main() {}
