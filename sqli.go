@@ -1,19 +1,30 @@
-// Test 2
+
 package main 
  
-// chuongltv testing 15h, 26/6/2026
 import (
 	"database/sql"
 	"net/http"
 )
 
-func DeleteHandler(db *sql.DB) func(w http.ResponseWriter, req *http.Request) {
+// func DeleteHandler(db *sql.DB) func(w http.ResponseWriter, req *http.Request) {
+// 	return func(w http.ResponseWriter, req *http.Request) {
+// 		del := req.URL.Query().Get("del")
+// 		id := req.URL.Query().Get("Id")
+// 		if del == "del" {
+// 			_, err = db.Exec("DELETE FROM table WHERE Id = " + id) 
+// 			if err != nil {
+// 				panic(err)
+// 			}
+// 		}
+// 	}
+// }
+
+func DeleteHandlerController(db *sql.DB) func(w http.ResponseWriter, req *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 		del := req.URL.Query().Get("del")
 		id := req.URL.Query().Get("Id")
 		if del == "del" {
-			// ruleid: tainted-sql-string
-			_, err = db.Exec("DELETE FROM table WHERE Id = " + id) // test total scanned targets and findings
+			_, err = db.Exec("DELETE FROM table WHERE Id = " + id) 
 			if err != nil {
 				panic(err)
 			}
