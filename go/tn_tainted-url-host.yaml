@@ -1,0 +1,85 @@
+package main
+
+import (
+	"io"
+	"net"
+	"net/http"
+	"net/url"
+	"strings"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+
+	target := r.FormValue("url")
+
+	/*
+		Manual mitigation inline:
+		- parse URL
+		- allowlist hostname
+		- reject localhost/internal IP
+	*/
+
+	u, err := url.Parse(target)
+	if err != nil {
+		http.Error(w, "invalid url", 400)
+		return
+	}
+
+	// only http/https
+	if u.Scheme != "http" && u.Scheme != "https" {
+		http.Error(w, "invalid scheme", 400)
+		return
+	}
+
+	host := strings.ToLower(u.Hostname())
+
+	allowedHosts := map[string]bool{
+		"api.example.com": true,
+		"cdn.example.com": true,
+	}
+
+	// hostname allowlist
+	if !allowedHosts[host] {
+		http.Error(w, "host not allowed", 400)
+		return
+	}
+
+	// resolve DNS
+	ips, err := net.LookupIP(host)
+	if err != nil {
+		http.Error(w, "dns failure", 400)
+		return
+	}
+
+	for _, ip := range ips {
+
+		// block localhost/private ranges
+		if ip.IsLoopback() ||
+			ip.IsPrivate() ||
+			ip.IsLinkLocalUnicast() ||
+			ip.IsLinkLocalMulticast() {
+
+			http.Error(w, "internal address blocked", 400)
+			return
+		}
+	}
+
+	/*
+		Semgrep still alerts:
+		- source: r.FormValue("url")
+		- sink: http.Get(target)
+		- no sanitizer in rule
+		- inline validation is not recognized
+	*/
+
+	resp, err := http.Get(target)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	defer resp.Body.Close()
+
+	io.Copy(w, resp.Body)
+}
+
+func main() {}
