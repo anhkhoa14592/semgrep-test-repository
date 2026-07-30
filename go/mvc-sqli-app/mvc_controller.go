@@ -19,6 +19,7 @@ package main
 // the sink is the raw SQL built inside tn_gosql-sqli.go - now reachable
 // end-to-end via this file's functions, which is the call-graph edge this
 // sample exists to exercise.
+// Chuong.le1
 
 import (
 	"database/sql"
